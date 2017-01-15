@@ -1,4 +1,5 @@
 # php-with-docker-mssql
+[![CircleCI](https://circleci.com/gh/imunew/php-with-docker-mssql.svg?style=svg)](https://circleci.com/gh/imunew/php-with-docker-mssql)
 This is an example project uses '[mssql-server-linux](https://hub.docker.com/r/microsoft/mssql-server-linux/)'.
 
 ## Install Docker
