@@ -11,7 +11,7 @@ This is an example project uses '[mssql-server-linux](https://hub.docker.com/r/m
 - `$ docker-compose run php composer install`
 
 ## Database migration
-- `$ docker-compose run app/bootstrap.php`
+- `$ docker-compose run php php app/bootstrap.php`
 
 ## Run test
-- `$ docker-compose run vendor/bin/phpunit`
+- `$ docker-compose run php vendor/bin/phpunit`

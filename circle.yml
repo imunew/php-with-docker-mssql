@@ -1,0 +1,18 @@
+machine:
+  timezone:
+    Asia/Tokyo
+  services:
+    docker
+
+dependencies:
+  override:
+    - docker-compose up -d --build
+    - docker-compose run php composer install
+
+database:
+  override:
+    - docker-compose run php php app/bootstrap.php
+
+test:
+  override:
+    - docker-compose run php vendor/bin/phpunit
