@@ -1,17 +1,12 @@
-version: '2'
-services:
-  mssql:
-    build: ./docker/mssql
-    env_file: ./.env
-    ports:
-      - "1433:1433"
-  php:
-    build: ./docker/php
-    env_file: .env
-    links:
-      - mssql
-    depends_on:
-      - mssql
-    volumes:
-      - .:/data/
-    restart: unless-stopped
+mssql:
+  build: ./docker/mssql
+  env_file: ./docker/mssql/.env
+  ports:
+    - "1433:1433"
+php:
+  build: ./docker/php
+  env_file: ./docker/php/.env
+  links:
+    - mssql
+  volumes:
+    - .:/data/
