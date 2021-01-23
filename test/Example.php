@@ -1,12 +1,19 @@
 <?php
 
+namespace Test;
 
-class Example extends PHPUnit_Framework_TestCase
+use PDO;
+use PHPUnit\Framework\TestCase;
+
+class Example extends TestCase
 {
     /** @var PDO */
     private $pdo;
 
-    public function setUp()
+    /**
+     * {@inheritDoc}
+     */
+    protected function setUp() : void
     {
         $container = require __DIR__. '/../app/container.php';
         $this->pdo = $container['db'];
@@ -25,5 +32,4 @@ SQL;
 
         $this->assertCount(3, $records);
     }
-
 }

@@ -9,5 +9,7 @@ $password = getenv('DEFAULT_PASSWORD');
 $pdo = new PDO($dsn, $username, $password);
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-$container['db'] = $pdo;
+$container['db'] = function () use ($pdo) {
+    return $pdo;
+};
 return $container;

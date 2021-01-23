@@ -4,3 +4,6 @@
 
 # php
 /vendor
+
+# phpunit
+/.phpunit.result.cache

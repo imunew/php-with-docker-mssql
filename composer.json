@@ -6,10 +6,16 @@
             "email": "imunew@gmail.com"
         }
     ],
+    "autoload-dev": {
+        "psr-4": {
+            "Test\\": "test/"
+        }
+    },
     "require": {
-        "pimple/pimple": "^3.0"
+        "ext-pdo": "*",
+        "pimple/pimple": "^3.3"
     },
     "require-dev": {
-        "phpunit/phpunit": "^5.7"
+        "phpunit/phpunit": "^9.5"
     }
 }

@@ -1,0 +1,52 @@
+version: 2
+jobs:
+  test:
+    docker:
+      - image: php:7.4
+        environment:
+          DEFAULT_DSN: sqlsrv:Server=localhost;
+          DEFAULT_USERNAME: sa
+          DEFAULT_PASSWORD: p@ssw0rd
+      - image: mcr.microsoft.com/mssql/server:2017-latest
+        environment:
+          ACCEPT_EULA: Y
+          SA_PASSWORD: p@ssw0rd
+    resource_class: medium
+    steps:
+      - run:
+          name: Install packages and PHP extensions
+          command: |
+            apt-get update \
+            && apt-get install -y zlib1g-dev libzip-dev unzip wget gnupg git \
+            && docker-php-ext-install zip opcache
+      - run:
+          name: Install MSSQL PHP extensions
+          command: |
+            curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+            curl https://packages.microsoft.com/config/debian/10/prod.list > /etc/apt/sources.list.d/mssql-release.list
+            apt-get update
+            ACCEPT_EULA=Y apt-get install -y msodbcsql17 mssql-tools
+            apt-get install -y unixodbc-dev libgssapi-krb5-2
+            pecl install sqlsrv
+            pecl install pdo_sqlsrv
+            docker-php-ext-enable sqlsrv
+            docker-php-ext-enable pdo_sqlsrv
+      - run:
+          name: Install composer
+          command: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            composer install --no-interaction --prefer-dist
+      - run:
+          name: Run Tests by phpunit
+          command: |
+            php app/bootstrap.php
+            vendor/bin/phpunit
+
+workflows:
+  version: 2
+  build-workflow:
+    jobs:
+      - test
